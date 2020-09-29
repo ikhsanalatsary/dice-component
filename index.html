@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Uno Dice Game</title>
+    <style>
+      * {
+        font-family: Arial;
+      }
+      uno-dice {
+        color: hsl(calc(9856 * 60), 70%, 50%);
+      }
+      .row {
+        display: flex;
+        flex-direction: row;
+      }
+      .wrapper {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+      }
+      button {
+        padding: 16px 18px;
+        border: none;
+        color: white;
+        font-size: 16px;
+        display: inline-block;
+        outline: none;
+        cursor: pointer;
+        text-transform: capitalize;
+        background-color: deepskyblue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>
+        &#127922;&nbsp;Uno Dice Game&nbsp;&#127922;
+      </h1>
+      <h2>~UnicOde Dice Component~</h2>
+      <div class="row">
+        <uno-dice face="1" id="face-1"></uno-dice>
+        <uno-dice id="face-2"></uno-dice>
+      </div>
+    </div>
+    <div style="margin-top: 4em;">
+      <h3>Example Components:</h3>
+      <div class="row">
+        <uno-dice face="1" id="face-1-1"></uno-dice>
+        <uno-dice face="2" id="face-2-2"></uno-dice>
+        <uno-dice face="3" id="face-3"></uno-dice>
+        <uno-dice face="4" id="face-4"></uno-dice>
+        <uno-dice face="5" id="face-5"></uno-dice>
+        <uno-dice face="6" id="face-6"></uno-dice>
+        <!-- invalid face value -->
+        <uno-dice face="x" id="face-x"></uno-dice>
+        <uno-dice face="7" id="face-7"></uno-dice>
+      </div>
+    </div>
+    <script src="main.js" type="module"></script>
+  </body>
+</html>
