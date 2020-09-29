@@ -60,7 +60,7 @@ class Dice extends HTMLElement {
 
   _isValidFace(value) {
     if (Number.isNaN(value)) return false;
-    return value >= 0 && value <= 6;
+    return value >= 1 && value <= 6;
   }
 
   _init() {
