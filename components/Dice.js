@@ -22,12 +22,12 @@ class Dice extends HTMLElement {
         <div id="dice"></div>
       </template>
     `;
-  }
-
-  connectedCallback() {
     let template = this.querySelector("template");
     this._clone = template.content.cloneNode(true);
     this.shadowRoot.appendChild(this._clone);
+  }
+
+  connectedCallback() {
     this._init();
   }
 
@@ -35,10 +35,13 @@ class Dice extends HTMLElement {
     if (oldValue && oldValue !== newValue) {
       let value = Number(newValue);
       if (this._isValidFace(value)) {
-        let [face, decimal] = this._getFace(value);
+        let face = this._getFace(value);
         let dice = this.shadowRoot.querySelector("#dice");
-        dice.setAttribute("style", `color: hsl(${decimal * 60}, 70%, 50%)`);
         dice.textContent = face;
+        dice.setAttribute(
+          "style",
+          `color: hsl(${getRandomFace() * 60}, 70%, 50%)`
+        );
       } else {
         invariant(
           `You are trying to pass ${newValue} to face attribute which is invalid. The face should be from 1 to 6`
@@ -55,7 +58,7 @@ class Dice extends HTMLElement {
     let newValue = 0x267f + value;
     let face = String.fromCodePoint(newValue);
 
-    return [face, newValue];
+    return face;
   }
 
   _isValidFace(value) {
@@ -66,13 +69,13 @@ class Dice extends HTMLElement {
   _init() {
     let dice = this.shadowRoot.querySelector("#dice");
     let oneToSix = getRandomFace();
-    let [randomFace, code] = this._getFace(oneToSix);
+    let randomFace = this._getFace(oneToSix);
     if (this.hasAttribute("face")) {
       let value = Number(this.getAttribute("face"));
       if (this._isValidFace(value)) {
-        let [face, decimal] = this._getFace(value);
+        let face = this._getFace(value);
         dice.textContent = face;
-        dice.setAttribute("style", `color: hsl(${decimal * 60}, 70%, 50%)`);
+        dice.setAttribute("style", `color: hsl(${oneToSix * 60}, 70%, 50%)`);
       } else {
         invariant(
           `You are trying to pass ${this.getAttribute(
@@ -81,11 +84,11 @@ class Dice extends HTMLElement {
           `So, We change that to ${oneToSix}`
         );
         dice.textContent = randomFace;
-        dice.setAttribute("style", `color: hsl(${code * 60}, 70%, 50%)`);
+        dice.setAttribute("style", `color: hsl(${oneToSix * 60}, 70%, 50%)`);
       }
     } else {
       dice.textContent = randomFace;
-      dice.setAttribute("style", `color: hsl(${code * 60}, 70%, 50%)`);
+      dice.setAttribute("style", `color: hsl(${oneToSix * 60}, 70%, 50%)`);
     }
   }
 }
