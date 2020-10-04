@@ -40,7 +40,7 @@ class Dice extends HTMLElement {
         dice.textContent = face;
         dice.setAttribute(
           "style",
-          `color: hsl(${getRandomFace() * 60}, 70%, 50%)`
+          `color: hsl(${face.charCodeAt(0) * 60}, 70%, 50%)`
         );
       } else {
         invariant(
@@ -75,7 +75,10 @@ class Dice extends HTMLElement {
       if (this._isValidFace(value)) {
         let face = this._getFace(value);
         dice.textContent = face;
-        dice.setAttribute("style", `color: hsl(${oneToSix * 60}, 70%, 50%)`);
+        dice.setAttribute(
+          "style",
+          `color: hsl(${face.charCodeAt(0) * 60}, 70%, 50%)`
+        );
       } else {
         invariant(
           `You are trying to pass ${this.getAttribute(
@@ -84,11 +87,17 @@ class Dice extends HTMLElement {
           `So, We change that to ${oneToSix}`
         );
         dice.textContent = randomFace;
-        dice.setAttribute("style", `color: hsl(${oneToSix * 60}, 70%, 50%)`);
+        dice.setAttribute(
+          "style",
+          `color: hsl(${randomFace.charCodeAt(0) * 60}, 70%, 50%)`
+        );
       }
     } else {
       dice.textContent = randomFace;
-      dice.setAttribute("style", `color: hsl(${oneToSix * 60}, 70%, 50%)`);
+      dice.setAttribute(
+        "style",
+        `color: hsl(${randomFace.charCodeAt(0) * 60}, 70%, 50%)`
+      );
     }
   }
 }
