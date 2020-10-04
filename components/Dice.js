@@ -31,33 +31,27 @@ class Dice extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    switch (name) {
-      case "face":
-        if (oldValue && oldValue !== newValue) {
-          let value = Number(newValue);
-          if (this._isValidFace(value)) {
-            let face = this._getFace(value);
-            let dice = this.shadowRoot.querySelector("#dice");
-            dice.textContent = face;
-            dice.setAttribute(
-              "style",
-              `color: hsl(${face.charCodeAt(0) * 60}, 70%, 50%)`
-            );
-          } else {
-            invariant(
-              `You are trying to pass ${newValue} to face attribute which is invalid. The face should be from 1 to 6`
-            );
-          }
-        }
-        break;
-      case "size":
-        if (oldValue && oldValue !== newValue) {
+    if (name === "face") {
+      if (oldValue && oldValue !== newValue) {
+        let value = Number(newValue);
+        if (this._isValidFace(value)) {
+          let face = this._getFace(value);
           let dice = this.shadowRoot.querySelector("#dice");
-          dice.setAttribute("style", `font-size: ${newValue}`);
+          dice.textContent = face;
+          dice.setAttribute(
+            "style",
+            `color: hsl(${face.charCodeAt(0) * 60}, 70%, 50%)`
+          );
+        } else {
+          invariant(
+            `You are trying to pass ${newValue} to face attribute which is invalid. The face should be from 1 to 6`
+          );
         }
-        break;
-      default:
-        break;
+      }
+    }
+    if (name === "size") {
+      let dice = this.shadowRoot.querySelector("#dice");
+      dice.setAttribute("style", `font-size: ${newValue}`);
     }
   }
 
