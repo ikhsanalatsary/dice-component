@@ -5,6 +5,7 @@
 import { invariant, getRandomFace } from "../util.js";
 
 class Dice extends HTMLElement {
+  #dice;
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -24,6 +25,7 @@ class Dice extends HTMLElement {
     let template = this.querySelector("template");
     this._clone = template.content.cloneNode(true);
     this.shadowRoot.appendChild(this._clone);
+    this.#dice = this.shadowRoot.querySelector("#dice");
   }
 
   connectedCallback() {
@@ -36,7 +38,7 @@ class Dice extends HTMLElement {
         let value = Number(newValue);
         if (this._isValidFace(value)) {
           let face = this._getFace(value);
-          let dice = this.shadowRoot.querySelector("#dice");
+          let dice = this.#dice;
           dice.textContent = face;
           dice.setAttribute(
             "style",
@@ -51,7 +53,7 @@ class Dice extends HTMLElement {
     }
     if (name === "size") {
       if (newValue) {
-        let dice = this.shadowRoot.querySelector("#dice");
+        let dice = this.#dice;
         dice.setAttribute("style", `font-size: ${newValue}`);
       }
     }
@@ -74,7 +76,7 @@ class Dice extends HTMLElement {
   }
 
   _init() {
-    let dice = this.shadowRoot.querySelector("#dice");
+    let dice = this.#dice;
     let oneToSix = getRandomFace();
     let randomFace = this._getFace(oneToSix);
     if (this.hasAttribute("face")) {
