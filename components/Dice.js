@@ -50,8 +50,10 @@ class Dice extends HTMLElement {
       }
     }
     if (name === "size") {
-      let dice = this.shadowRoot.querySelector("#dice");
-      dice.setAttribute("style", `font-size: ${newValue}`);
+      if (newValue) {
+        let dice = this.shadowRoot.querySelector("#dice");
+        dice.setAttribute("style", `font-size: ${newValue}`);
+      }
     }
   }
 
