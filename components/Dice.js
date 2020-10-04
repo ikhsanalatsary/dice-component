@@ -12,11 +12,10 @@ class Dice extends HTMLElement {
       <template>
         <style>
           #dice {
-            font-size: 200px;
-            display: flex;
-            height: 10px;
-            padding-bottom: 250px;
-            margin-bottom: 20px;
+             font-size: ${this.getAttribute("size") || "200px"};
+             max-height: 200px;
+             top: -20px;
+             position: relative;
           }
         </style>
         <div id="dice"></div>
@@ -32,26 +31,38 @@ class Dice extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    if (oldValue && oldValue !== newValue) {
-      let value = Number(newValue);
-      if (this._isValidFace(value)) {
-        let face = this._getFace(value);
-        let dice = this.shadowRoot.querySelector("#dice");
-        dice.textContent = face;
-        dice.setAttribute(
-          "style",
-          `color: hsl(${face.charCodeAt(0) * 60}, 70%, 50%)`
-        );
-      } else {
-        invariant(
-          `You are trying to pass ${newValue} to face attribute which is invalid. The face should be from 1 to 6`
-        );
-      }
+    switch (name) {
+      case "face":
+        if (oldValue && oldValue !== newValue) {
+          let value = Number(newValue);
+          if (this._isValidFace(value)) {
+            let face = this._getFace(value);
+            let dice = this.shadowRoot.querySelector("#dice");
+            dice.textContent = face;
+            dice.setAttribute(
+              "style",
+              `color: hsl(${face.charCodeAt(0) * 60}, 70%, 50%)`
+            );
+          } else {
+            invariant(
+              `You are trying to pass ${newValue} to face attribute which is invalid. The face should be from 1 to 6`
+            );
+          }
+        }
+        break;
+      case "size":
+        if (oldValue && oldValue !== newValue) {
+          let dice = this.shadowRoot.querySelector("#dice");
+          dice.setAttribute("style", `font-size: ${newValue}`);
+        }
+        break;
+      default:
+        break;
     }
   }
 
   static get observedAttributes() {
-    return ["face"];
+    return ["face", "size"];
   }
 
   _getFace(value) {
